@@ -7,8 +7,8 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>test</module>
     <module>weekgame</module>
+    <module>exercise</module>
   </modules>
 
   <name>leetcode</name>

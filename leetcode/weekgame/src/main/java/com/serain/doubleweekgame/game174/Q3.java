@@ -1,75 +1,62 @@
 package com.serain.doubleweekgame.game174;
 
-import java.util.HashMap;
-
 public class Q3 {
     private static final int MOD = 1000000007;
 
+    /**
+     * 计算数组的有效分割方案数
+     * 有效分割要求块的XOR结果在target1和target2之间交替出现，以target1开始
+     * 
+     * @param nums 输入数组
+     * @param target1 第一个块的目标XOR值
+     * @param target2 第二个块的目标XOR值
+     * @return 有效分割方案数，对1e9+7取余
+     */
     public int alternatingXOR(int[] nums, int target1, int target2) {
         int n = nums.length;
         if (n == 0) return 0;
         
-        // Calculate prefix XOR array
+        // 计算前缀XOR数组
         int[] prefixXOR = new int[n + 1];
         for (int i = 0; i < n; i++) {
             prefixXOR[i + 1] = prefixXOR[i] ^ nums[i];
         }
         
-        // Dynamic programming:
-        // dp1[i]: Number of valid partitions for first i elements ending with target1
-        // dp2[i]: Number of valid partitions for first i elements ending with target2
+        // 动态规划：
+        // dp1[i]: 前i个元素的有效分割方案数，且最后一个块的XOR为target1
+        // dp2[i]: 前i个元素的有效分割方案数，且最后一个块的XOR为target2
         long[] dp1 = new long[n + 1];
         long[] dp2 = new long[n + 1];
         
-        // Hash maps to track prefix XOR values and their corresponding dp sums
-        HashMap<Integer, Long> dp1Map = new HashMap<>();
-        HashMap<Integer, Long> dp2Map = new HashMap<>();
+        // 哈希表记录前缀XOR值出现的次数及其对应的dp1和dp2之和
+        // key: prefixXOR值, value: 该值对应的(dp1 + dp2)的和
+        java.util.HashMap<Integer, Long> dp2Map = new java.util.HashMap<>();
+        // 哈希表记录前缀XOR值出现的次数及其对应的dp1之和
+        // key: prefixXOR值, value: 该值对应的dp1的和
+        java.util.HashMap<Integer, Long> dp1Map = new java.util.HashMap<>();
+        
+        // 初始化：空数组的情况
+        dp2Map.put(0, 1L); // 初始前缀XOR为0，对应空数组，有1种方案
         
         for (int i = 1; i <= n; i++) {
-            // Calculate dp1[i]: current block XOR is target1
+            // 计算dp1[i]：当前块XOR为target1，前一个块可以是target1或target2或空
             int requiredXOR1 = prefixXOR[i] ^ target1;
-            long contributionFromEmpty = (requiredXOR1 == 0) ? 1 : 0;
-            long contributionFromDp2 = dp2Map.getOrDefault(requiredXOR1, 0L);
-            dp1[i] = (contributionFromEmpty + contributionFromDp2) % MOD;
+            if (dp2Map.containsKey(requiredXOR1)) {
+                dp1[i] = dp2Map.get(requiredXOR1) % MOD;
+            }
             
-            // Calculate dp2[i]: current block XOR is target2
+            // 计算dp2[i]：当前块XOR为target2，前一个块必须是target1
             int requiredXOR2 = prefixXOR[i] ^ target2;
-            dp2[i] = dp1Map.getOrDefault(requiredXOR2, 0L) % MOD;
+            if (dp1Map.containsKey(requiredXOR2)) {
+                dp2[i] = dp1Map.get(requiredXOR2) % MOD;
+            }
             
-            // Update hash maps
-            dp1Map.put(prefixXOR[i], (dp1Map.getOrDefault(prefixXOR[i], 0L) + dp1[i]) % MOD);
+            // 更新dp2Map
             dp2Map.put(prefixXOR[i], (dp2Map.getOrDefault(prefixXOR[i], 0L) + dp2[i]) % MOD);
+            // 更新dp1Map
+            dp1Map.put(prefixXOR[i], (dp1Map.getOrDefault(prefixXOR[i], 0L) + dp1[i]) % MOD);
         }
-        
+        // 总方案数是dp1[n] + dp2[n]
         return (int)((dp1[n] + dp2[n]) % MOD);
-    }
-    
-    // Test method
-    public static void main(String[] args) {
-        Q3 solution = new Q3();
-        
-        // Test case provided by user
-        int[] nums = {40807, 3874, 40807, 3874};
-        int target1 = 40807;
-        int target2 = 3874;
-        
-        int result = solution.alternatingXOR(nums, target1, target2);
-        System.out.println("Test case result: " + result);
-        System.out.println("Expected result: 1");
-        System.out.println("Test passed: " + (result == 1));
-        
-        // Additional test case: single element
-        int[] nums2 = {40807};
-        int result2 = solution.alternatingXOR(nums2, target1, target2);
-        System.out.println("\nSingle element test case result: " + result2);
-        System.out.println("Expected result: 1");
-        System.out.println("Test passed: " + (result2 == 1));
-        
-        // Additional test case: two elements
-        int[] nums3 = {40807, 3874};
-        int result3 = solution.alternatingXOR(nums3, target1, target2);
-        System.out.println("\nTwo elements test case result: " + result3);
-        System.out.println("Expected result: 1");
-        System.out.println("Test passed: " + (result3 == 1));
     }
 }
