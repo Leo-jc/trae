@@ -1,5 +1,7 @@
 /**
+ * 题目：4. 字典序最小删除操作
  * @author serain
+ * @date 2026-01-19
  * @description 字典序最小删除操作实现
  */
 package com.serain.singleweekgame.game485;

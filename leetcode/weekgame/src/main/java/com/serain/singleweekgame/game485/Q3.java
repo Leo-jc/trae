@@ -1,5 +1,7 @@
 /**
+ * 题目：3. 拍卖系统
  * @author serain
+ * @date 2026-01-19
  * @description 拍卖系统实现，用于管理用户对物品的出价
  */
 package com.serain.singleweekgame.game485;

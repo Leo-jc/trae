@@ -1,5 +1,12 @@
 package com.serain.doubleweekgame.game174;
 
+/**
+ * 题目：3. 交替XOR分割
+ * 作者：serain
+ * 日期：2026-01-19
+ * 描述：计算数组的有效分割方案数，有效分割要求块的XOR结果在target1和target2之间交替出现，以target1开始。
+ * 解法：使用动态规划和哈希表优化，计算前缀XOR并统计分割方案。
+ */
 public class Q3 {
     private static final int MOD = 1000000007;
 

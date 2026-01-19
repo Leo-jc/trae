@@ -2,6 +2,13 @@ package com.serain.singleweekgame.game485;
 
 import java.util.Arrays;
 
+/**
+ * 题目：2. 最大容量
+ * 作者：serain
+ * 日期：2026-01-19
+ * 描述：给定机器的成本和容量，以及预算，计算购买两台机器的最大总容量，要求总成本严格小于预算。
+ * 解法：排序机器，预处理最大容量数组，然后使用二分查找找到最佳组合。
+ */
 public class Q2 {
     public int maxCapacity(int[] costs, int[] capacity, int budget) {
         int n = costs.length;

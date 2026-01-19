@@ -1,5 +1,12 @@
 package com.serain.doubleweekgame.game174;
 
+/**
+ * 题目：2. 最小操作次数
+ * 作者：serain
+ * 日期：2026-01-19
+ * 描述：计算将 nums 转换为 target 所需的最小操作次数，每次操作可以选择一个值 x，同时处理所有值为 x 的极大连续段。
+ * 解法：统计不匹配位置的不同原始值数量，即为最小操作次数。
+ */
 public class Q2 {
     /**
      * 计算将 nums 转换为 target 所需的最小操作次数

@@ -1,5 +1,12 @@
 package com.serain.exercise;
 
+/**
+ * 题目：1895. 最大的幻方
+ * 作者：serain
+ * 日期：2026-01-19
+ * 描述：给定一个二维网格 grid，返回其中最大的幻方的尺寸。幻方是一个大小为 k x k 的正方形，满足每行、每列、主对角线和副对角线的和都相同。
+ * 解法：从最大可能的尺寸开始遍历，检查每个可能的正方形是否为幻方。
+ */
 public class E1895 {
     public int largestMagicSquare(int[][] grid) {
         int k = Math.min(grid.length, grid[0].length);

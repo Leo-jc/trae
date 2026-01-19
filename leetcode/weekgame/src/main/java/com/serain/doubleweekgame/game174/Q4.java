@@ -3,6 +3,13 @@ package com.serain.doubleweekgame.game174;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 题目：4. 最小边翻转次数
+ * 作者：serain
+ * 日期：2026-01-19
+ * 描述：计算将 start 转换为 target 所需的最小边翻转次数，返回需要翻转的边的索引列表。
+ * 解法：使用深度优先搜索，检查每个节点的翻转需求并记录需要翻转的边。
+ */
 public class Q4 {
     /**
      * Find the minimum number of edge flips to convert start to target
