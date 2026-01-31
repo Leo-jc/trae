@@ -28,12 +28,16 @@ public class E3507 {
  */
 class Solution {
     /**
-     * Pair 记录类：存储相邻元素的和及其左边元素的下标
-     *
-     * @param s 相邻元素的和
-     * @param i 左边元素的下标
+     * Pair 类：存储相邻元素的和及其左边元素的下标
      */
-    private record Pair(long s, int i) {
+    private static class Pair {
+        long s;
+        int i;
+
+        Pair(long s, int i) {
+            this.s = s;
+            this.i = i;
+        }
     }
 
     /**
@@ -137,12 +141,16 @@ class Solution {
  */
 class Solution2 {
     /**
-     * Pair 记录类：存储相邻元素的和及其左边元素的下标
-     *
-     * @param s 相邻元素的和
-     * @param i 左边元素的下标
+     * Pair 类：存储相邻元素的和及其左边元素的下标
      */
-    private record Pair(long s, int i) {
+    private static class Pair {
+        long s;
+        int i;
+
+        Pair(long s, int i) {
+            this.s = s;
+            this.i = i;
+        }
     }
 
     /**
