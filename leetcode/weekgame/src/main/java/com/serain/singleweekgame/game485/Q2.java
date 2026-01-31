@@ -1,8 +1,24 @@
+/**
+ * @author Serain
+ * @date 2026-01-31
+ * @description 计算最大容量
+ * 给定成本数组、容量数组和预算，选择最多两个机器，使得总成本不超过预算，且总容量最大。
+ * 示例：
+ * 输入：costs = [1,2,3], capacity = [3,2,5], budget = 5
+ * 输出：8
+ */
 package com.serain.singleweekgame.game485;
 
 import java.util.Arrays;
 
 public class Q2 {
+    /**
+     * 计算最大容量
+     * @param costs 成本数组
+     * @param capacity 容量数组
+     * @param budget 预算
+     * @return 最大总容量
+     */
     public int maxCapacity(int[] costs, int[] capacity, int budget) {
         int n = costs.length;
         if (n == 0) return 0;
@@ -62,6 +78,12 @@ public class Q2 {
         return maxCapacity;
     }
     
+    /**
+     * 二分查找找到最大的成本不超过目标值的机器索引
+     * @param machines 机器数组
+     * @param target 目标成本
+     * @return 最大的索引，不存在返回-1
+     */
     private int binarySearch(Machine[] machines, int target) {
         int left = 0, right = machines.length - 1;
         int result = -1;
@@ -79,9 +101,18 @@ public class Q2 {
         return result;
     }
     
+    /**
+     * 机器类，存储成本和容量
+     */
     static class Machine {
         int cost;
         int cap;
+        
+        /**
+         * 构造机器
+         * @param cost 成本
+         * @param cap 容量
+         */
         public Machine(int cost, int cap) {
             this.cost = cost;
             this.cap = cap;

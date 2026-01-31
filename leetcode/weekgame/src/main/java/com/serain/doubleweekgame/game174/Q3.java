@@ -1,3 +1,13 @@
+/**
+ * @author Serain
+ * @date 2026-01-31
+ * @description 交替异或操作计数
+ * 给定一个整数数组nums和两个目标值target1、target2，计算有多少种方式可以将数组分割成若干段，
+ * 使得奇数段的异或和等于target1，偶数段的异或和等于target2。结果对10^9+7取模。
+ * 示例：
+ * 输入：nums = [1,2,3], target1 = 1, target2 = 2
+ * 输出：2
+ */
 package com.serain.doubleweekgame.game174;
 
 import java.util.HashMap;
@@ -5,6 +15,13 @@ import java.util.HashMap;
 public class Q3 {
     private static final int MOD = 1000000007;
 
+    /**
+     * 计算交替异或操作的方式数
+     * @param nums 整数数组
+     * @param target1 奇数段的目标异或和
+     * @param target2 偶数段的目标异或和
+     * @return 方式数，结果对10^9+7取模
+     */
     public int alternatingXOR(int[] nums, int target1, int target2) {
         int n = nums.length;
         if (n == 0) return 0;

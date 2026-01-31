@@ -1,3 +1,12 @@
+/**
+ * @author Serain
+ * @date 2026-01-31
+ * @description 计算特殊节点数量
+ * 给定一个无向树，计算满足到三个给定节点的距离构成勾股数的节点数量。
+ * 示例：
+ * 输入：n = 5, edges = [[0,1],[0,2],[1,3],[1,4]], x = 3, y = 4, z = 2
+ * 输出：2
+ */
 package com.serain.singleweekgame.game486;
 
 import java.util.ArrayList;
@@ -7,6 +16,15 @@ import java.util.List;
 import java.util.Map;
 
 public class Q3 {
+    /**
+     * 计算特殊节点数量
+     * @param n 节点数量
+     * @param edges 边的数组
+     * @param x 第一个目标节点
+     * @param y 第二个目标节点
+     * @param z 第三个目标节点
+     * @return 特殊节点的数量
+     */
     public int specialNodes(int n, int[][] edges, int x, int y, int z) {
         Map<Integer, List<Integer>> graph = new HashMap<>();
         for (int[] edge : edges) {
@@ -49,6 +67,14 @@ public class Q3 {
         return ans;
     }
 
+    /**
+     * 深度优先搜索遍历树，计算节点深度和父节点
+     * @param u 当前节点
+     * @param level 当前深度
+     * @param dist 深度数组
+     * @param graph 邻接表
+     * @param parent 父节点数组
+     */
     private void dfs(int u, int level, int[] dist, Map<Integer, List<Integer>> graph, int[] parent) {
         dist[u] = level;
         if (graph.containsKey(u)) {
@@ -61,6 +87,14 @@ public class Q3 {
         }
     }
 
+    /**
+     * 计算两个节点的最近公共祖先
+     * @param u 第一个节点
+     * @param v 第二个节点
+     * @param depth 深度数组
+     * @param up 倍增表
+     * @return 最近公共祖先
+     */
     private int lowestCommonAncestor(int u, int v, int[] depth, int[][] up) {
         if (depth[u] < depth[v]) {
             int tmp = u;

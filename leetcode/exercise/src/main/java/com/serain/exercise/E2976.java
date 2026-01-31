@@ -1,23 +1,29 @@
 /**
  * @author Serain
- * @date  
+ * @date 2026-01-31
+ * @description 从源字符串到目标字符串的最小成本
+ * 给你两个字符串 source 和 target，以及两个字符数组 original 和 changed，还有一个整数数组 cost。
+ * 其中 original[i] 和 changed[i] 表示你可以将 original[i] 更改为 changed[i]，成本为 cost[i]。
+ * 你可以执行任意次数的更改操作，每次操作的成本都会累加。
+ * 请你返回从 source 到 target 的最小总成本。如果无法完成转换，返回 -1。
+ * 示例：
+ * 输入：source = "abcd", target = "acbe", original = ["a","b","c","c","e","d"], changed = ["b","c","b","e","b","e"], cost = [2,5,5,1,2,20]
+ * 输出：28
  */
 package com.serain.exercise;
 
-
 public class E2976 {
     /**
-     * 最小转换成本
+     * 计算从源字符串到目标字符串的最小成本
      * @param source 源字符串
      * @param target 目标字符串
      * @param original 原始字符数组
      * @param changed 目标字符数组
-     * @param cost 转换成本数组
-     * @return 最小转换成本
+     * @param cost 成本数组
+     * @return 最小总成本，无法完成返回-1
      */
     public long minimumCost(String source, String target, char[] original, char[] changed, int[] cost) {
         // 初始化成本矩阵，使用Floyd-Warshall算法计算所有字符对之间的最小转换成本
-        // 假设字符范围在ASCII范围内（0-255）
         int[][] minCost = new int[26][26];
         for (int i = 0; i < 26; i++) {
             for (int j = 0; j < 26; j++) {
