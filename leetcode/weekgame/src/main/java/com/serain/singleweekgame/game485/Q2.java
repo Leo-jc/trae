@@ -1,19 +1,33 @@
+/**
+ * @author Serain
+ * @date 2026-01-31
+ * @description 计算最大容量
+ * 给定成本数组、容量数组和预算，选择最多两个机器，使得总成本不超过预算，且总容量最大。
+ * 示例：
+ * 输入：costs = [1,2,3], capacity = [3,2,5], budget = 5
+ * 输出：8
+ */
 package com.serain.singleweekgame.game485;
 
 import java.util.Arrays;
 
 public class Q2 {
+    /**
+     * 计算最大容量
+     * @param costs 成本数组
+     * @param capacity 容量数组
+     * @param budget 预算
+     * @return 最大总容量
+     */
     public int maxCapacity(int[] costs, int[] capacity, int budget) {
         int n = costs.length;
         if (n == 0) return 0;
         
-        // Create machine objects
         Machine[] machines = new Machine[n];
         for (int i = 0; i < n; i++) {
             machines[i] = new Machine(costs[i], capacity[i]);
         }
         
-        // Sort by cost ascending, then capacity descending
         Arrays.sort(machines, (a, b) -> {
             if (a.cost != b.cost) {
                 return a.cost - b.cost;
@@ -22,48 +36,36 @@ public class Q2 {
             }
         });
         
-        // Precompute max capacity array: maxCap[i] is max capacity from 0 to i
         int[] maxCap = new int[n];
         maxCap[0] = machines[0].cap;
         for (int i = 1; i < n; i++) {
-            maxCap[i] = Math.max(maxCap[i-1], machines[i].cap);
+            maxCap[i] = Math.max(maxCap[i - 1], machines[i].cap);
         }
         
         int maxCapacity = 0;
         
-        // Check single machine case
         for (int i = 0; i < n; i++) {
             if (machines[i].cost < budget) {
                 maxCapacity = Math.max(maxCapacity, machines[i].cap);
             }
         }
         
-        // Check two machines case
         for (int i = 0; i < n; i++) {
             int remaining = budget - machines[i].cost;
             if (remaining <= 0) continue;
             
-            // Find the largest j where cost <= remaining - 1 (since we need strictly less than budget)
             int j = binarySearch(machines, remaining - 1);
             if (j < 0) continue;
             
-            // Find the maximum capacity in [0, j] that's not the same machine
-            // Since we sorted by capacity descending for same cost, maxCap[j] gives the best
             int bestCap = maxCap[j];
             if (i <= j) {
-                // We need to find the best capacity excluding machines[i]
                 if (j == 0) {
-                    // Only one machine in range, skip if it's the same
                     if (i == 0) continue;
                 } else if (i == j) {
-                    // Current machine is the last in range, use max up to j-1
-                    bestCap = maxCap[j-1];
+                    bestCap = maxCap[j - 1];
                 } else {
-                    // Current machine is in the middle, check if it's the max
-                    // Since we sorted by capacity descending, if machines[i].cap == maxCap[j],
-                    // then the second max is maxCap[i-1] (if i > 0) or maxCap[j] (if i == 0)
                     if (machines[i].cap == maxCap[j]) {
-                        bestCap = i > 0 ? Math.max(maxCap[i-1], maxCap[j] - machines[i].cap) : 0;
+                        bestCap = i > 0 ? Math.max(maxCap[i - 1], maxCap[j] - machines[i].cap) : 0;
                     }
                 }
             }
@@ -76,6 +78,12 @@ public class Q2 {
         return maxCapacity;
     }
     
+    /**
+     * 二分查找找到最大的成本不超过目标值的机器索引
+     * @param machines 机器数组
+     * @param target 目标成本
+     * @return 最大的索引，不存在返回-1
+     */
     private int binarySearch(Machine[] machines, int target) {
         int left = 0, right = machines.length - 1;
         int result = -1;
@@ -93,9 +101,18 @@ public class Q2 {
         return result;
     }
     
+    /**
+     * 机器类，存储成本和容量
+     */
     static class Machine {
         int cost;
         int cap;
+        
+        /**
+         * 构造机器
+         * @param cost 成本
+         * @param cap 容量
+         */
         public Machine(int cost, int cap) {
             this.cost = cost;
             this.cap = cap;

@@ -1,43 +1,48 @@
+/**
+ * @author Serain
+ * @date 2026-01-31
+ * @description 寻找最佳信号塔
+ * 给定一组信号塔和一个中心点，以及一个半径，找出在半径范围内信号质量最高的信号塔。
+ * 如果有多个信号塔质量相同，选择坐标较小的那个。
+ * 示例：
+ * 输入：towers = [[1,2,5],[2,1,7],[3,1,9]], center = [2,2], radius = 2
+ * 输出：[2,1]
+ */
 package com.serain.doubleweekgame.game174;
 
-
 public class Q1 {
-
     /**
-     * 找出在给定中心点和半径范围内的塔中，质量最大的塔
-     * 如果有多个质量相同的塔，则选择x坐标最小的；如果x坐标也相同，则选择y坐标最小的
-     * 
-     * @param towers 塔的数组，每个塔包含[x, y, 质量]
-     * @param center 中心点坐标[x, y]
+     * 寻找最佳信号塔
+     * @param towers 信号塔数组，每个元素为[x, y, quality]
+     * @param center 中心点坐标
      * @param radius 半径
-     * @return 质量最大的塔的坐标[x, y]，如果没有塔在范围内则返回[-1, -1]
+     * @return 最佳信号塔的坐标，不存在返回[-1,-1]
      */
     public int[] bestTower(int[][] towers, int[] center, int radius) {
         int[] result = new int[2];
         result[0] = -1;
         result[1] = -1;
-        int maxQuality = -1; // 初始化为-1，这样质量为0的塔也能被正确处理
-        int radiusSquared = radius; // 预计算半径的平方，避免重复计算
+        int maxQuality = -1;
+        int radiusSquared = radius * radius;
         
         for (int[] tower : towers) {
             int x = tower[0];
             int y = tower[1];
             int quality = tower[2];
             
-            int distanceSquared = Math.abs(x-center[0]) + Math.abs(y-center[1]);
+            int dx = x - center[0];
+            int dy = y - center[1];
+            int distanceSquared = dx * dx + dy * dy;
             
-            // 如果距离大于半径，跳过
             if (distanceSquared > radiusSquared) {
                 continue;
             }
             
-            // 更新结果
             if (quality > maxQuality) {
                 maxQuality = quality;
                 result[0] = x;
                 result[1] = y;
             } else if (quality == maxQuality) {
-                // 质量相同时，选择坐标较小的
                 if (x < result[0] || (x == result[0] && y < result[1])) {
                     result[0] = x;
                     result[1] = y;
